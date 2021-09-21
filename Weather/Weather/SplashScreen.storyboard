@@ -16,16 +16,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tshedza" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tI9-z5-pk7">
-                                <rect key="frame" x="164" y="397" width="65" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sea_sunnypng" translatesAutoresizingMaskIntoConstraints="NO" id="MVR-ZD-a0l">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8m0-d4-M0D"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="MVR-ZD-a0l" firstAttribute="leading" secondItem="Hzq-Eh-cuh" secondAttribute="leading" id="HAP-iC-U7S"/>
+                            <constraint firstAttribute="trailing" secondItem="MVR-ZD-a0l" secondAttribute="trailing" id="OVb-0Q-yxb"/>
+                            <constraint firstItem="MVR-ZD-a0l" firstAttribute="top" secondItem="Hzq-Eh-cuh" secondAttribute="top" id="dIY-jz-Nr5"/>
+                            <constraint firstAttribute="bottom" secondItem="MVR-ZD-a0l" secondAttribute="bottom" id="jrj-bR-5bp"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Aqu-nu-eic" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -34,6 +36,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="sea_sunnypng" width="360" height="320"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
