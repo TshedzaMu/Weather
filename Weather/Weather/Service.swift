@@ -15,7 +15,6 @@ class Service {
     func getCurrentWeather(completed: @escaping currentSucess) {
         AF.request("https://api.openweathermap.org/data/2.5/weather?q=Johannesburg&appid=578feca10a590e86711974e85a838e7b&units=metric")
             .responseJSON { response in
-               // print(response)
                     guard response.error == nil else {
                         print(response.error!)
                         completed(nil, (response.error?.errorDescription)!)

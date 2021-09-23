@@ -32,11 +32,11 @@ class HomeScreeViewContoller: UIViewController {
     
     private func setupUI() {
         viewModel.fetchWeather {
-            self.mainCurrentLabel.text = String("\((self.viewModel.currentWeather.main?.temp)!)\("℃")")
-            self.currentTempLabel.text = String("\((self.viewModel.currentWeather.main?.temp)!)\("℃")")
+            self.mainCurrentLabel.text = ("\(self.viewModel.currentTemp)\("℃")")
+            self.currentTempLabel.text = ("\(self.viewModel.currentTemp)\("℃")")
             self.mainDescriptionLabel.text = self.viewModel.currentWeather.weather?.first?.description
-            self.minimumTempLabel.text = String("\((self.viewModel.currentWeather.main?.temp_min)!)\("℃")")
-            self.maximimTempLabel.text = String("\((self.viewModel.currentWeather.main?.temp_max)!)\("℃")")
+            self.minimumTempLabel.text = ("\(self.viewModel.minTemp)\("℃")")
+            self.maximimTempLabel.text = ("\(self.viewModel.maxTemp)\("℃")")
        }
     }
 }
