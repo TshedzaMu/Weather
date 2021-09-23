@@ -17,6 +17,8 @@ class HomeScreeViewContoller: UIViewController {
     @IBOutlet private var minimumTempLabel: UILabel!
     @IBOutlet private var currentTempLabel: UILabel!
     @IBOutlet private var maximimTempLabel: UILabel!
+    @IBOutlet weak var mainWeatherImageView: UIImageView!
+    @IBOutlet weak var mainWeatherStackView: UIStackView!
     
     private lazy var viewModel = HomeScreenViewModel()
     
@@ -31,16 +33,36 @@ class HomeScreeViewContoller: UIViewController {
         viewModel.fetchWeather {
             self.mainCurrentLabel.text = ("\(self.viewModel.currentTemp)\("℃")")
             self.currentTempLabel.text = ("\(self.viewModel.currentTemp)\("℃")")
-            self.mainDescriptionLabel.text = self.viewModel.currentWeather.weather?.first?.description
+            self.mainDescriptionLabel.text = self.viewModel.description
             self.minimumTempLabel.text = ("\(self.viewModel.minTemp)\("℃")")
             self.maximimTempLabel.text = ("\(self.viewModel.maxTemp)\("℃")")
+            self.setupViewTheme(mainCondition: self.viewModel.mainWeatherDescription)
             self.wetherTableView.reloadData()
        }
+    }
+    
+    private func setupViewTheme(mainCondition: String) {
+        switch mainCondition {
+        case "Clouds":
+            mainWeatherImageView.image = UIImage(named: "cloudy")
+            mainWeatherStackView.backgroundColor = viewModel.hexStringToUIColor(hex: "#9AB5CF")
+            view.backgroundColor = viewModel.hexStringToUIColor(hex: "#9AB5CF")
+        case "Clear":
+            mainWeatherImageView.image = UIImage(named: "sunny")
+            mainWeatherStackView.backgroundColor = viewModel.hexStringToUIColor(hex: "#3BA0FD")
+            view.backgroundColor = viewModel.hexStringToUIColor(hex: "#3BA0FD")
+    
+        case "Rain":
+            mainWeatherImageView.image = UIImage(named: "rainny")
+            mainWeatherStackView.backgroundColor = viewModel.hexStringToUIColor(hex: "#878787")
+            view.backgroundColor = viewModel.hexStringToUIColor(hex: "#878787")
+        default:
+            break
+        }
     }
 }
 
 extension HomeScreeViewContoller: UITableViewDelegate, UITableViewDataSource {
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.listCount
@@ -51,6 +73,7 @@ extension HomeScreeViewContoller: UITableViewDelegate, UITableViewDataSource {
         cell.setWeatherForecast(weekday: viewModel.forecastWeather.list?[indexPath.row].dt_txt ?? "",
                                 imageIcon: String((viewModel.weatherArray[indexPath.row].weather?.first?.main)!),
                                 temparature: viewModel.tempArray[indexPath.row])
+        cell.setCellBacground(condition: viewModel.mainWeatherDescription)
         return cell
     }
     

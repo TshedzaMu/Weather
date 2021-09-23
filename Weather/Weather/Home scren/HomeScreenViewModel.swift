@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class HomeScreenViewModel {
     
@@ -14,6 +15,13 @@ class HomeScreenViewModel {
     var forecastWeather = ForecastWeatherResponse()
     var dates = [String]()
     
+    var description: String {
+        return currentWeather.weather?.first?.description ?? ""
+    }
+    
+    var mainWeatherDescription: String {
+        return currentWeather.weather?.first?.main ?? ""
+    }
     
     var currentTemp: String {
         guard let currentTemp = currentWeather.main?.temp else {
@@ -39,9 +47,7 @@ class HomeScreenViewModel {
     var listCount: Int {
         return forecastWeather.list?.count ?? Int()
     }
-    
- 
-    
+        
     var weatherArray: [Forecast] {
         return forecastWeather.list ?? []
     }
@@ -58,15 +64,36 @@ class HomeScreenViewModel {
         return temps
     }
     
+    func hexStringToUIColor (hex:String) -> UIColor {
+        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+
+        if (cString.hasPrefix("#")) {
+            cString.remove(at: cString.startIndex)
+        }
+
+        if ((cString.count) != 6) {
+            return UIColor.gray
+        }
+
+        var rgbValue:UInt64 = 0
+        Scanner(string: cString).scanHexInt64(&rgbValue)
+
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
+    
     func fetchWeather(completed: @escaping () ->()) {
         DispatchQueue.main.async {
-            self.service.getCurrentWeather { (response, error) in
+            self.service.getCurrentWeather(long: "", lat: "" ) { (response, error) in
                 self.currentWeather = response ?? CurrentWeatherResponse()
                 completed()
             }
-            self.service.getWeatherForecast { (response, error) in
+            self.service.getWeatherForecast(long: "", lat: "" ) { (response, error) in
                 self.forecastWeather = response ?? ForecastWeatherResponse()
-                print(self.forecastWeather)
                 completed()
             }
         }

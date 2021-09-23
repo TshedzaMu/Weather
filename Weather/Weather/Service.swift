@@ -13,7 +13,7 @@ class Service {
     typealias currentSuccess = (CurrentWeatherResponse?, _ error: String?) ->()
     typealias forecastSuccess = (ForecastWeatherResponse?, _ error: String?) ->()
     
-    func getCurrentWeather(completed: @escaping currentSuccess) {
+    func getCurrentWeather(long: String, lat: String, completed: @escaping currentSuccess) {
         AF.request("https://api.openweathermap.org/data/2.5/weather?q=Johannesburg&appid=578feca10a590e86711974e85a838e7b&units=metric")
             .responseJSON { response in
                 guard response.error == nil else {
@@ -35,7 +35,7 @@ class Service {
             }
     }
     
-    func getWeatherForecast(completed: @escaping forecastSuccess) {
+    func getWeatherForecast(long: String, lat: String, completed: @escaping forecastSuccess) {
         AF.request("https://api.openweathermap.org/data/2.5/forecast?q=Johannesburg&appid=578feca10a590e86711974e85a838e7b&units=metric")
             .responseJSON { response in
                 guard response.error == nil else {
