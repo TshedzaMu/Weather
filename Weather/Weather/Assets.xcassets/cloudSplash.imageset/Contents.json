@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "PARTLY_CLOUDY_ICON.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "PARTLY_CLOUDY_ICON@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "PARTLY_CLOUDY_ICON@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
