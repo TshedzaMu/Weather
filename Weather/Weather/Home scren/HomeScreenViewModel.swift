@@ -16,22 +16,31 @@ class HomeScreenViewModel {
     
     
     var currentTemp: String {
-        return String(format:"%.0f", currentWeather.main?.temp! as! CVarArg)
+        guard let currentTemp = currentWeather.main?.temp else {
+              return ""
+          }
+        return String(format:"%.0f", currentTemp)
     }
     
     var minTemp: String {
-        return String(format:"%.0f", currentWeather.main?.temp_min as! CVarArg)
+        guard let mainTemp = currentWeather.main?.temp_min else {
+              return ""
+          }
+        return String(format:"%.0f", mainTemp)
     }
     
     var maxTemp: String {
-        return String(format:"%.0f", currentWeather.main?.temp_max as! CVarArg)
+        guard let maxTemp = currentWeather.main?.temp_max else {
+              return ""
+          }
+        return String(format:"%.0f", maxTemp)
     }
     
     var listCount: Int {
         return forecastWeather.list?.count ?? Int()
     }
     
-
+ 
     
     var weatherArray: [Forecast] {
         return forecastWeather.list ?? []
@@ -40,7 +49,10 @@ class HomeScreenViewModel {
     var tempArray: [String] {
         var temps = [String]()
         for weather in weatherArray {
-            let temp = String(format:"%.0f", weather.main?.temp as! CVarArg)
+            guard let forecastTemp = weather.main?.temp else {
+                  return []
+              }
+            let temp = String(format:"%.0f", forecastTemp)
             temps.append(temp)
         }
         return temps
