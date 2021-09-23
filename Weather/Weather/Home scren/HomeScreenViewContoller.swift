@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 class HomeScreeViewContoller: UIViewController {
     
@@ -21,12 +22,19 @@ class HomeScreeViewContoller: UIViewController {
     @IBOutlet weak var mainWeatherStackView: UIStackView!
     
     private lazy var viewModel = HomeScreenViewModel()
+    var locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         wetherTableView.delegate = self
         wetherTableView.dataSource = self
         setupUI()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.startUpdatingLocation()
+        }
     }
     
     private func setupUI() {
@@ -79,5 +87,13 @@ extension HomeScreeViewContoller: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(70)
+    }
+}
+
+extension HomeScreeViewContoller: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            print(location.coordinate)
+        }
     }
 }
