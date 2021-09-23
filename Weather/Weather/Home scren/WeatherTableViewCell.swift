@@ -19,6 +19,6 @@ class WeatherTableViewCell: UITableViewCell {
                      temparature: String) {
         weekDayTextLabel.text = weekday
         weatherImageicon.image = UIImage(named: imageIcon)
-        temparatureTextLabel.text = temparature
+        temparatureTextLabel.text = "\(temparature)\("℃")"
     }
 }

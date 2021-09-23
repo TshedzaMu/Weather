@@ -37,6 +37,7 @@ class HomeScreeViewContoller: UIViewController {
             self.mainDescriptionLabel.text = self.viewModel.currentWeather.weather?.first?.description
             self.minimumTempLabel.text = ("\(self.viewModel.minTemp)\("℃")")
             self.maximimTempLabel.text = ("\(self.viewModel.maxTemp)\("℃")")
+            self.wetherTableView.reloadData()
        }
     }
 }
@@ -45,14 +46,14 @@ extension HomeScreeViewContoller: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return viewModel.listCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WEATHER_CELL", for: indexPath) as! WeatherTableViewCell
-        cell.setWeatherForecast(weekday: names[indexPath.row],
-                                imageIcon: icon[indexPath.row],
-                                temparature: temp[indexPath.row])
+        cell.setWeatherForecast(weekday: viewModel.weatherArray[indexPath.row].dt_txt ?? "",
+                                imageIcon: String((viewModel.weatherArray[indexPath.row].weather?.first?.main)!),
+                                temparature: String((viewModel.weatherArray[indexPath.row].main?.temp!)!))
         return cell
     }
     

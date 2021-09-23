@@ -10,9 +10,10 @@ import Alamofire
 
 class Service {
     
-    typealias currentSucess = (CurrentWeatherResponse?, _ error: String?) ->()
+    typealias currentSuccess = (CurrentWeatherResponse?, _ error: String?) ->()
+    typealias forecastSuccess = (ForecastWeatherResponse?, _ error: String?) ->()
 
-    func getCurrentWeather(completed: @escaping currentSucess) {
+    func getCurrentWeather(completed: @escaping currentSuccess) {
         AF.request("https://api.openweathermap.org/data/2.5/weather?q=Johannesburg&appid=578feca10a590e86711974e85a838e7b&units=metric")
             .responseJSON { response in
                     guard response.error == nil else {
@@ -34,11 +35,12 @@ class Service {
                 }
     }
     
-    func getWeatherForecast(completed: @escaping () ->()) {
+    func getWeatherForecast(completed: @escaping forecastSuccess) {
         AF.request("https://api.openweathermap.org/data/2.5/forecast?q=Johannesburg&appid=578feca10a590e86711974e85a838e7b&units=metric")
             .responseJSON { response in
               //  print(response)
                     guard response.error == nil else {
+                        completed(nil, (response.error?.errorDescription)!)
                         print(response.error!)
                         return
                     }
@@ -48,8 +50,8 @@ class Service {
                     }
                     do {
                         let decoder = JSONDecoder()
-                        let info = try decoder.decode(CurrentWeatherResponse.self, from: data)
-                        print(info)
+                        let forecastWeather = try decoder.decode(ForecastWeatherResponse.self, from: data)
+                       completed(forecastWeather, nil)
                        
                     } catch {
                         print(error)
