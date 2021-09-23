@@ -17,9 +17,6 @@ class HomeScreeViewContoller: UIViewController {
     @IBOutlet private var minimumTempLabel: UILabel!
     @IBOutlet private var currentTempLabel: UILabel!
     @IBOutlet private var maximimTempLabel: UILabel!
-    var names = ["Monday", "Tuesday", "Wed", "Thursday", "Friday"]
-    var temp = ["10", "15", "40", "50", "100"]
-    var icon = ["clearIcon", "partlySunnyIcon", "clearIcon", "clearIcon", "rainIcon"]
     
     private lazy var viewModel = HomeScreenViewModel()
     
@@ -51,9 +48,9 @@ extension HomeScreeViewContoller: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WEATHER_CELL", for: indexPath) as! WeatherTableViewCell
-        cell.setWeatherForecast(weekday: viewModel.weatherArray[indexPath.row].dt_txt ?? "",
+        cell.setWeatherForecast(weekday: viewModel.forecastWeather.list?[indexPath.row].dt_txt ?? "",
                                 imageIcon: String((viewModel.weatherArray[indexPath.row].weather?.first?.main)!),
-                                temparature: String((viewModel.weatherArray[indexPath.row].main?.temp!)!))
+                                temparature: viewModel.tempArray[indexPath.row])
         return cell
     }
     

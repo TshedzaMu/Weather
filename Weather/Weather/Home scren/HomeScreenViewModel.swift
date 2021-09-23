@@ -37,24 +37,14 @@ class HomeScreenViewModel {
         return forecastWeather.list ?? []
     }
     
-    var dateArray: [String] {
+    var tempArray: [String] {
+        var temps = [String]()
         for weather in weatherArray {
-            let date = weather.dt_txt ?? ""
-            dates.append(date)
+            let temp = String(format:"%.0f", weather.main?.temp as! CVarArg)
+            temps.append(temp)
         }
-        return dates
+        return temps
     }
-    
-//    var getWeekDatesFromDate: [String] {
-//        var weekDays = [String]()
-//        for date in dateArray {
-//         / let weekday = Calendar.current.component(.weekday, from: date)
-//           // weekdays.a
-//        }
-//
-//        return weekDays
-//    }
-    
     
     func fetchWeather(completed: @escaping () ->()) {
         DispatchQueue.main.async {
